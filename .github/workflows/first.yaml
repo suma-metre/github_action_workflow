@@ -18,3 +18,25 @@ jobs:
 
       - name: Force failure
         run: exit 1
+
+      - name: Send email on failure
+        if: failure()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "🚨 GitHub Action Failed"
+          body: |
+            Workflow failed!
+
+            Repo: ${{ github.repository }}
+            Branch: ${{ github.ref }}
+            Actor: ${{ github.actor }}
+
+            Check details:
+            https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+          to: sumametre0440@gmail.com
+          from: GitHub Actions

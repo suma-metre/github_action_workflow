@@ -17,9 +17,6 @@ jobs:
           echo "Step 3"
           echo "Step 4"
 
-      - name: Force failure
-        run: exit 1
-
       - name: Send email on failure
         if: failure()
         uses: dawidd6/action-send-mail@v3
